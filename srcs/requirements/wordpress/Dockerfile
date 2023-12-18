@@ -1,7 +1,7 @@
 FROM debian:bullseye
 
 RUN apt update &&\
-	apt upgrade &&\
+	apt upgrade -y &&\
     apt install -y php7.4 \
                     php-fpm \
                     php-mysql \

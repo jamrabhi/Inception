@@ -12,7 +12,7 @@ curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.pha
 sleep 15
 chmod +x wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
-wp core download --allow-root --path=/var/www/jamrabhi/wordpress --locale=fr_FR
+wp core download --allow-root --version=6.4 --path=/var/www/jamrabhi/wordpress --locale=fr_FR
 cd /var/www/jamrabhi/wordpress
 wp config create --allow-root --dbname=${SQL_DATABASE} --dbuser=${SQL_USER} --dbpass=${SQL_PASSWORD} --dbhost="mariadb"
 wp core install --allow-root --url=${DOMAIN_NAME} --title=${WP_TITLE} --admin_user=${SQL_USER} --admin_password=${SQL_PASSWORD} --admin_email=${WP_EMAIL} --skip-email
