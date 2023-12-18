@@ -1,0 +1,63 @@
+version: "3"
+
+services:
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    build: ./requirements/mariadb
+    env_file: .env
+    networks:
+      - inception
+    expose:
+      - "3306"
+    volumes:
+      - mariadb_vol:/var/lib/mysql
+    restart: always
+  
+  wordpress:
+    container_name: wordpress
+    image: wordpress
+    build: ./requirements/wordpress
+    networks:
+      - inception
+    depends_on:
+      - mariadb
+    expose:
+      - "9000"
+    volumes:
+      - wordpress_vol:/var/www/jamrabhi
+    env_file: .env
+    restart: always
+  
+  nginx:
+    container_name: nginx
+    image: nginx
+    build: ./requirements/nginx
+    networks:
+      - inception
+    depends_on:
+      - wordpress
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress_vol:/var/www/jamrabhi
+    env_file: .env
+    restart: always
+
+networks:
+  inception:
+    driver: bridge
+
+volumes:
+  wordpress_vol:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/jamrabhi/data/wordpress'
+  mariadb_vol:
+    driver: local
+    driver_opts:
+      type: 'none' 
+      o: 'bind'
+      device: '/home/jamrabhi/data/mariadb'

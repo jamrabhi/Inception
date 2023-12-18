@@ -3,7 +3,7 @@ server {
 
     ssl_protocols TLSv1.2 TLSv1.3;
 
-	root /var/www/jamrabhi;
+	root /var/www/jamrabhi/wordpress;
 
 	index index.html index.htm index.nginx-debian.html index.php;
 

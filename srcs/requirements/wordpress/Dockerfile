@@ -6,9 +6,18 @@ RUN apt update &&\
                     php-fpm \
                     php-mysql \
                     mariadb-client \
-                    wget
+                    curl
 
-#WP CONF
-RUN wget https://fr.wordpress.org/wordpress-6.4-fr_FR.tar.gz -P /var/www/jamrabhi && \
-	tar -xvf /var/www/jamrabhi/wordpress-6.4-fr_FR.tar.gz -C /var/www/jamrabhi/ && \
-    rm /var/www/jamrabhi/wordpress-6.4-fr_FR.tar.gz
+EXPOSE 9000
+
+COPY conf/www.conf /etc/php/7.4/fpm/pool.d/
+
+RUN mkdir -p /var/www/jamrabhi/wordpress
+
+RUN mkdir /run/php/
+
+COPY conf/conf.sh /
+
+RUN	chown -R root:root /var/www/jamrabhi/wordpress/
+
+ENTRYPOINT ["sh", "/conf.sh"]
